@@ -2,6 +2,12 @@ local M = {}
 
 local preview_buffer = -1
 
+local default_opts = {
+  callback = function(buf) end,
+}
+
+local final_opts = {}
+
 function M.preview_buffer()
   return preview_buffer
 end
@@ -10,13 +16,8 @@ function M.cancel_preview()
   preview_buffer = -1
 end
 
-function M.setup(opts)
-  local callback
-  if opts.callback then
-    callback = opts.callback
-  end
-
-  local group_id = vim.api.nvim_create_augroup("preview-buffer-group", { clear = true })
+function M.enable()
+  local group_id = vim.api.nvim_create_augroup("preview-buffer.group", { clear = true })
   vim.api.nvim_create_autocmd("BufAdd", {
     group = group_id,
     pattern = "*",
@@ -25,31 +26,42 @@ function M.setup(opts)
         vim.cmd("bdelete" .. tostring(preview_buffer))
       end
       preview_buffer = args.buf
-      callback(preview_buffer)
+      final_opts.callback(preview_buffer)
       vim.api.nvim_create_autocmd("TextChanged", {
+        group = group_id,
         buffer = preview_buffer,
         once = true,
         callback = function(inner_args)
           if preview_buffer == inner_args.buf then
             preview_buffer = -1
-            callback(preview_buffer)
+            final_opts.callback(preview_buffer)
           end
         end,
       })
       vim.api.nvim_create_autocmd({ "TextChanged", "BufDelete" }, {
+        group = group_id,
         buffer = preview_buffer,
         once = true,
         callback = function(inner_args)
           if preview_buffer == inner_args.buf then
             preview_buffer = -1
-            callback(preview_buffer)
+            final_opts.callback(preview_buffer)
           end
         end,
       })
     end,
   })
 
-  -- vim.api.nvim_del_autocmd(group_id)
+end
+
+function M.disable()
+  vim.api.nvim_del_augroup_by_name("preview-buffer.group")
+  preview_buffer = -1
+end
+
+function M.setup(opts)
+  final_opts = vim.tbl_extend("force", default_opts, opts)
+  M.enable()
 end
 
 return M
