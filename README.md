@@ -2,9 +2,9 @@
 
 Vscode preview tab like feature in neovim.
 
-This plugin automatically choose an unmodified buffer as a preview buffer, every new buffer will replace the previous preview buffer. This plugin is useful if you don't want to have a lot of buffers in the buffer list
+This plugin automatically choose an unmodified buffer as a preview buffer, every new buffer will replace the previous preview buffer. This plugin is useful if you don't want to have a lot of buffers in the buffer list.
 
-## Installation & Confiuration
+## Installation & Configuration
 
 Use your favourate plugin manager, e.g. neovim built-in plugin manager in 0.12
 
