@@ -1,6 +1,6 @@
 local M = {}
 
-local preview_buffer = -1
+local preview_buffer = nil
 
 local default_opts = {
   callback = function(buf) end,
@@ -17,6 +17,7 @@ function M.cancel_preview()
 end
 
 function M.enable()
+  preview_buffer = -1
   local group_id = vim.api.nvim_create_augroup("preview-buffer.group", { clear = true })
   vim.api.nvim_create_autocmd("BufAdd", {
     group = group_id,
@@ -30,7 +31,7 @@ function M.enable()
           once = true,
           callback = function()
             vim.cmd("bdelete" .. tostring(prev_preview_buffer))
-          end
+          end,
         })
       end
       preview_buffer = args.buf
@@ -55,9 +56,19 @@ function M.disable()
   preview_buffer = -1
 end
 
+function M.toggle()
+  if preview_buffer == nil then
+    M.enable()
+  else
+    M.disable()
+  end
+end
+
 function M.setup(opts)
   final_opts = vim.tbl_extend("force", default_opts, opts)
   M.enable()
+
+  vim.api.nvim_create_user_command("PreviewBufferToggle", M.toggle, {})
 end
 
 return M

@@ -30,6 +30,10 @@ require("preview-buffer").setup({
 })
 ```
 
+## Commands
+
+- `PreviewBufferToggle` Toggle this plugin
+
 ## Functions
 
 ```lua
@@ -38,4 +42,5 @@ preview_buffer.preview_buffer() -- Get the preview buffer id, -1 if none
 preview_buffer.cancel_preview() -- Don't preview the current preview buffer
 preview_buffer.enable() -- Enable preview-buffer
 preview_buffer.disable() -- Disable preview-buffer
+preview_buffer.toggle() -- Toggle preview-buffer
 ```
