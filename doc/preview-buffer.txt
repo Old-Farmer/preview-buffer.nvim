@@ -11,24 +11,22 @@ useful if you don't want to have a lot of buffers in the buffer list.
 Installation & Configuration              *preview-buffer-installation-config*
 
 Use your favourate plugin manager, e.g. neovim built-in plugin manager in 0.12
-
-`vim.pack.add({ "https://github.com/Old-Farmer/preview-buffer.nvim" })`
-
+>lua
+  vim.pack.add({ "https://github.com/Old-Farmer/preview-buffer.nvim" })
+<
 Then setup it.
-
-`require("preview-buffer").setup()`
-
+>lua
+  require("preview-buffer").setup()
+<
 You maybe want to setup a callback when the preview buffer changes.
-
-```lua
-require("preview-buffer").setup({
-  -- buf is buffer id, -1 if no preview buffer
-  callback = function(buf)
-    print(buf)
-  end
-})
-```
-
+>lua
+  require("preview-buffer").setup({
+    -- buf is buffer id, -1 if no preview buffer
+    callback = function(buf)
+      print(buf)
+    end
+  })
+<
 ==============================================================================
 Commands                                             *preview-buffer-commands*
 
@@ -36,12 +34,12 @@ Commands                                             *preview-buffer-commands*
 
 ==============================================================================
 Functions                                             *preview-buffer-functions*
-
-```lua
-local preview_buffer = require("preview-buffer")
-preview_buffer.preview_buffer() -- Get the preview buffer id, -1 if none
-preview_buffer.cancel_preview() -- Don't preview the current preview buffer
-preview_buffer.enable() -- Enable preview-buffer
-preview_buffer.disable() -- Disable preview-buffer
-preview_buffer.toggle() -- Toggle preview-buffer
-```
+>lua
+  local preview_buffer = require("preview-buffer")
+  preview_buffer.preview_buffer() -- Get the preview buffer id, -1 if none
+  preview_buffer.cancel_preview() -- Don't preview the current preview buffer
+  preview_buffer.enable() -- Enable preview-buffer
+  preview_buffer.disable() -- Disable preview-buffer
+  preview_buffer.toggle() -- Toggle preview-buffer
+<
+vim:tw=78:ts=8:ft=help:norl:
