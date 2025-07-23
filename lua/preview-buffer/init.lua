@@ -18,6 +18,7 @@ end
 
 function M.enable()
   preview_buffer = -1
+  final_opts.callback(preview_buffer)
   local group_id = vim.api.nvim_create_augroup("preview-buffer.group", { clear = true })
   vim.api.nvim_create_autocmd("BufAdd", {
     group = group_id,
@@ -53,7 +54,8 @@ end
 
 function M.disable()
   vim.api.nvim_del_augroup_by_name("preview-buffer.group")
-  preview_buffer = -1
+  preview_buffer = nil
+  final_opts.callback(preview_buffer)
 end
 
 function M.toggle()

@@ -23,7 +23,7 @@ You maybe want to setup a callback when the preview buffer changes.
 
 ```lua
 require("preview-buffer").setup({
-  -- buf is buffer id, -1 if no preview buffer
+  -- buf is buffer id, -1 if no preview buffer, nil if disable
   callback = function(buf)
     print(buf)
   end
@@ -38,9 +38,14 @@ require("preview-buffer").setup({
 
 ```lua
 local preview_buffer = require("preview-buffer")
-preview_buffer.preview_buffer() -- Get the preview buffer id, -1 if none
-preview_buffer.cancel_preview() -- Don't preview the current preview buffer
-preview_buffer.enable() -- Enable preview-buffer
-preview_buffer.disable() -- Disable preview-buffer
-preview_buffer.toggle() -- Toggle preview-buffer
+-- Get the preview buffer id, -1 if none, nil if not enable
+preview_buffer.preview_buffer()
+-- Don't preview the current preview buffer
+preview_buffer.cancel_preview()
+-- Enable preview-buffer
+preview_buffer.enable()
+-- Disable preview-buffer
+preview_buffer.disable()
+-- Toggle preview-buffer
+preview_buffer.toggle()
 ```
