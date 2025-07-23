@@ -23,13 +23,21 @@ function M.enable()
     pattern = "*",
     callback = function(args)
       if preview_buffer ~= -1 then
-        vim.cmd("bdelete" .. tostring(preview_buffer))
+        local prev_preview_buffer = preview_buffer
+        vim.api.nvim_create_autocmd("BufReadPost", {
+          group = group_id,
+          buffer = args.buf,
+          once = true,
+          callback = function()
+            vim.cmd("bdelete" .. tostring(prev_preview_buffer))
+          end
+        })
       end
       preview_buffer = args.buf
       final_opts.callback(preview_buffer)
       vim.api.nvim_create_autocmd({ "TextChanged", "BufDelete" }, {
         group = group_id,
-        buffer = preview_buffer,
+        buffer = args.buf,
         once = true,
         callback = function(inner_args)
           if preview_buffer == inner_args.buf then
@@ -40,7 +48,6 @@ function M.enable()
       })
     end,
   })
-
 end
 
 function M.disable()
