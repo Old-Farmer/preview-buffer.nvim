@@ -37,7 +37,7 @@ function M.enable()
       end
       preview_buffer = args.buf
       final_opts.callback(preview_buffer)
-      vim.api.nvim_create_autocmd({ "TextChanged", "BufDelete" }, {
+      vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI", "BufDelete" }, {
         group = group_id,
         buffer = args.buf,
         once = true,
